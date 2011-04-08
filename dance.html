@@ -13,8 +13,9 @@
   #results-container { width: 1000px; background-color:grey; }
   #results { font-family: Arial; font-size:14px; text-align:center; width: 100%; overflow: hidden; margin-left: 25px; padding-top: 10px;}
   #results .result{ float:left; }
-  #controller {  margin-left:850px; background-color: black; padding: 5px; opacity: .80;}
+  #controller {  margin-left:850px; background-color: black; padding: 5px; opacity: .80; top: 500px; position: absolute;}
   #controller div { padding: 5px; margin: 5px; background-color: #66FF55;}
+  #notice { margin-left: 830px; top: 600px; position: absolute;};
   #control {}
 </style>
 <script src="jquery.js"></script>
@@ -46,28 +47,35 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
     var turn = ['PAIR','TOP','BOTTOM','LEFT'];
 
     $('div#twist-right').click(function() {
-        $('#notice').replaceWith('');
         types = ['PAIR','RIGHT'];
         idx = 0;
         if(imageMap['RIGHT']==null) {
             types = ['PAIR', 'TOP']
         }
+
+//        $('div#twist-left').unwrap('<b/>');
+//        $('div#turn').unwrap('<b/>');
+//        $(this).wrap('<b/>');
     });
 
     $('div#twist-left').click(function() {
-         $('#notice').replaceWith('');
         types = ['PAIR','LEFT'];
         idx = 0;
          if(imageMap['LEFT']==null) {
-             $('#notice').replaceWith('Oh no, I can\'t turn left...');
+             $('#notice').replaceWith('<div id="notice">Oh no, I\'m a Zoolander... <br>I can\'t turn left!</div>');
         }
+//        $(this).wrap('<b/>');
+//        $('div#twist-right').unwrap('<b/>');    
+//        $('div#turn').unwrap('<b/>');
     });
 
     $('div#turn').click(function() {
-         $('#notice').empty();
         types = turn;
         idx = 0;
         interval = 300;
+//        $('div#twist-right').unwrap('<b/>');
+//        $('div#twist-left').unwrap('<b/>');
+//        $('div#turn').wrap('<b/>');
     });
 
     $('div#toggle').click(function() {
@@ -182,6 +190,7 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
     </div>
     <div id="results"></div>
     <img id="dancer"><!-- src="http://www.zappos.com/images/z/1/5/4/1545838-1-MULTIVIEW.jpg"-->
+    <br>
     <div id="notice"></div>
     <div id="controller">
         <!--div id="toggle">No more dancing!</div-->
