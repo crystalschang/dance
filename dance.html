@@ -3,16 +3,17 @@
 <head>
 <style type="text/css">
   html { height: 100% }
-  body { height: 100%; margin: 0px; padding: 0px }
-  div { font-family: Arial; font-size:14px; text-align:center; float:left;}
+  body { height: 100%; margin: 0 auto; padding: 0px; width: 1000px; text-align:center; }
+  div { font-family: Arial; font-size:14px; text-align:center;}
   a { color: black; font-size: 11px; font-family: Verdana;}
   p { margin: 0px; font-family: Verdana; font-size: 11px; auto-margin: left; auto-margin: right;}
-  #title {float:center; display:block; margin-left: auto; margin-right: auto; text-align:center;font-size:35px; width:500px;}
-  #description {float:center; text-align:center;width:500px;}
-  #dancer {float:center; display:block; margin-left: auto; margin-right: auto;}
-  #results-container {float:center; display:left; margin-left: auto; margin-right: auto; width: 1000px; background-color:grey; }
-  #results { font-family: Arial; font-size:14px; text-align:center; float:left;}
-  #controller {float:center; display: block; margin-left:auto; auto-margin: right; vertical-align:bottom; bottom: 0px; position:fixed;background-color:grey; padding: 5px;}
+  #title { text-align:center;font-size:35px; width:100%;}
+  #description {text-align: center; width: 100%;}
+  #dancer { }
+  #results-container { width: 1000px; background-color:grey; }
+  #results { font-family: Arial; font-size:14px; text-align:center; width: 100%; overflow: hidden; }
+  #results .result{ float:left; }
+  #controller { vertical-align:bottom; bottom: 0px; position:fixed; background-color:grey; padding: 5px;}
   #control {}
 </style>
 <script src="jquery.js"></script>
@@ -28,11 +29,12 @@
   var page_id = 1;
   var idx = 0;
   var interval = 350;
+var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%20Hoods"]}&limit=7&key='+API_KEY;
 
   function initialize() {
     var flickr_url='http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?';
     //var search_url='http://api.zappos.com/Search?filters={"zc1":["Clothing"],"zc2":["Tops"],"brandFacet":["Spirit%20Hoods"]}&limit=7&key='+API_KEY;
-    var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%20Hoods"]}&limit=7&key='+API_KEY;
+//    var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%20Hoods"]}&limit=7&key='+API_KEY;
     //var search_url='http://api.zappos.com/Search?filters={"zc1":["Clothing"],"zc2":["Swimwear"],"txAttrFacet_Gender":["Women"]}&limit=7&key='+API_KEY;
     var zappos_url='http://api.zappos.com/Image?productId='+product_id+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
     var images = '';
@@ -44,7 +46,7 @@
             searchResults = data.results;
             $.each(searchResults, function(i, item) {
 
-               $('<div>').attr('id', 'd'+i).html('<p><a href="'+item.productUrl+'" target="new"><b>'+item.brandName+'</b><br/>'+item.productName+'</a></p>').appendTo('#results');
+               $('<div>').attr('id', 'd'+i).attr('class', 'result').html('<p><a href="'+item.productUrl+'" target="new"><b>'+item.brandName+'</b><br/>'+item.productName+'</a></p>').appendTo('#results');
                $('<img/>').attr('src', item.thumbnailImageUrl).attr('id', item.styleId)
                           .attr('href', item.productUrl).click(function() {
                     var img_url = 'http://api.zappos.com/Image?styleId='+item.styleId+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
@@ -87,14 +89,10 @@
         }
     });
 
-   $('div#rotate').click(function() {
-        rotating = !rotating;
-        if(rotating) {
-//           searchResults(curr_style_idx);
-        }
-        else {
-            // stop rotating
-        }
+   $('div#girls').click(function() {
+        console.log('let\'s see some girls!');
+        var search_url='http://api.zappos.com/Search?filters={"zc1":["Clothing"],"zc2":["Swimwear"],"txAttrFacet_Gender":["Women"]}&limit=7&key='+API_KEY;;
+        initialize();
    }); 
   }
 
@@ -155,10 +153,10 @@
     <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
     <p>Compatible with Google Chrome, and perhaps ONLY Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
     <br><br>
-<!--    <div id="controller">
+    <!--<div id="controller">
         <div id="twist-right">twist to the right</div>
         <div id="turn">turn</div>
-        <div id="rotate">Everybody DANCE!</div>
+        <div id="girls">Everybody DANCE!</div>
     </div>-->
 </body>
 </html>
