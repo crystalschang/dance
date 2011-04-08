@@ -11,9 +11,10 @@
   #description {text-align: center; width: 100%;}
   #dancer { }
   #results-container { width: 1000px; background-color:grey; }
-  #results { font-family: Arial; font-size:14px; text-align:center; width: 100%; overflow: hidden; }
+  #results { font-family: Arial; font-size:14px; text-align:center; width: 100%; overflow: hidden; margin-left: 25px; padding-top: 10px;}
   #results .result{ float:left; }
-  #controller { vertical-align:bottom; bottom: 0px; position:fixed; background-color:grey; padding: 5px;}
+  #controller {  margin-left:850px; background-color: black; padding: 5px; opacity: .80;}
+  #controller div { padding: 5px; margin: 5px; background-color: #66FF55;}
   #control {}
 </style>
 <script src="jquery.js"></script>
@@ -45,16 +46,25 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
     var turn = ['PAIR','TOP','BOTTOM','LEFT'];
 
     $('div#twist-right').click(function() {
+        $('#notice').replaceWith('');
         types = ['PAIR','RIGHT'];
         idx = 0;
+        if(imageMap['RIGHT']==null) {
+            types = ['PAIR', 'TOP']
+        }
     });
 
     $('div#twist-left').click(function() {
+         $('#notice').replaceWith('');
         types = ['PAIR','LEFT'];
         idx = 0;
+         if(imageMap['LEFT']==null) {
+             $('#notice').replaceWith('Oh no, I can\'t turn left...');
+        }
     });
 
     $('div#turn').click(function() {
+         $('#notice').empty();
         types = turn;
         idx = 0;
         interval = 300;
@@ -62,11 +72,11 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
 
     $('div#toggle').click(function() {
         if(dancing) {
-            $(this).replaceWith("START");
+            $(this).replaceWith("I need MORE DANCING!");
             dancing = false;
         }
         else{
-            $(this).replaceWith("STOP");
+            $(this).replaceWith("No more dancing.");
             start_dancing();
         }
     });
@@ -172,15 +182,17 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
     </div>
     <div id="results"></div>
     <img id="dancer"><!-- src="http://www.zappos.com/images/z/1/5/4/1545838-1-MULTIVIEW.jpg"-->
+    <div id="notice"></div>
+    <div id="controller">
+        <!--div id="toggle">No more dancing!</div-->
+        <div id="twist-right">twist to the right</div>
+        <div id="twist-left">twist to the left</div>
+        <div id="turn">spinny-spin!</div>
+    </div>
     <br><br>
     <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
     <p>Compatible with Google Chrome, and perhaps ONLY Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
     <br><br>
-    <!--<div id="controller">
-        <div id="twist-right">twist to the right</div>
-        <div id="turn">turn</div>
-        <div id="girls">Everybody DANCE!</div>
-    </div>-->
     <audio src="animal.ogg" loop controls> 
 </body>
 </html>
