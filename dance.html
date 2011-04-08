@@ -90,12 +90,9 @@
    $('div#rotate').click(function() {
         rotating = !rotating;
         if(rotating) {
-            ;// start rotating
 //           searchResults(curr_style_idx);
-console.log('start');
         }
         else {
-console.log('stop');
             // stop rotating
         }
    }); 
@@ -119,9 +116,6 @@ console.log('stop');
     }
 
     function start_dancing() {
-        console.log('i am dancin ');
-setTimeout('myFunx()', 5000);
-
         dancing = true;
         var mooove = setInterval( function() {
             
@@ -151,12 +145,6 @@ setTimeout('myFunx()', 5000);
 </script>
 </head>
 <body onload="initialize()">
-<!--    <div id="toggle">stop</div>
-    <div id="moves">
-        <div id="twist-right">twist to the right</div>
-        <div id="twist-left">twist to the left</div>
-        <div id="turn">turn</div>
-    </div>-->
     <div id="title">
         SPIRIT HOODS
         <div id="description">Click on your favorite to make them dance!</div>
@@ -165,15 +153,13 @@ setTimeout('myFunx()', 5000);
     <img id="dancer" src="http:\/\/www.zappos.com\/images\/z\/1\/5\/4\/1545843-p-MULTIVIEW.jpg">
     <br><br>
     <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
-    <p>Compatible with Google Chrome, and perhaps only Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
+    <p>Compatible with Google Chrome, and perhaps ONLY Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
     <br><br>
 <!--    <div id="controller">
         <div id="twist-right">twist to the right</div>
         <div id="turn">turn</div>
         <div id="rotate">Everybody DANCE!</div>
     </div>-->
-<!--    <audio src="animal.ogg" controls/> 
-    <div id="compatibility">Compatibile with Google Chrome.  I'm not gonna fix it if it's broken in another browser. kthxbai.</div> -->
 </body>
 </html>
 
