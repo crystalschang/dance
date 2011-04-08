@@ -4,10 +4,16 @@
 <style type="text/css">
   html { height: 100% }
   body { height: 100%; margin: 0px; padding: 0px }
-  div { font-family:"arial"; font-size:14px;}
-  #title {display:block; margin-left: auto; margin-right: auto; font-size:24px; width:400px;}
-  #dancer {display:block; margin-left: auto; margin-right: auto;}
-  #results {display:block; margin-left: auto; margin-right: auto; width: 1000px }
+  div { font-family: Arial; font-size:14px; text-align:center; float:left;}
+  a { color: black; font-size: 11px; font-family: Verdana;}
+  p { margin: 0px; font-family: Verdana; font-size: 11px; auto-margin: left; auto-margin: right;}
+  #title {float:center; display:block; margin-left: auto; margin-right: auto; text-align:center;font-size:35px; width:500px;}
+  #description {float:center; text-align:center;width:500px;}
+  #dancer {float:center; display:block; margin-left: auto; margin-right: auto;}
+  #results-container {float:center; display:left; margin-left: auto; margin-right: auto; width: 1000px; background-color:grey; }
+  #results { font-family: Arial; font-size:14px; text-align:center; float:left;}
+  #controller {float:center; display: block; margin-left:auto; auto-margin: right; vertical-align:bottom; bottom: 0px; position:fixed;background-color:grey; padding: 5px;}
+  #control {}
 </style>
 <script src="jquery.js"></script>
 <script type="text/javascript">
@@ -15,7 +21,11 @@
   var product_id = 7818770;
   var imageMap = {};
   var dancing = false;
+  var rotating = false;
   var types = ['TOP','LEFT','BACK','PAIR'];
+  var curr_style_id = 0;
+  var searchResults = {};
+  var page_id = 1;
   var idx = 0;
   var interval = 350;
 
@@ -26,50 +36,41 @@
     //var search_url='http://api.zappos.com/Search?filters={"zc1":["Clothing"],"zc2":["Swimwear"],"txAttrFacet_Gender":["Women"]}&limit=7&key='+API_KEY;
     var zappos_url='http://api.zappos.com/Image?productId='+product_id+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
     var images = '';
-    var searchResults = {};
 
     $.ajax({
         url:search_url,
         dataType:'jsonp',
-        success:function(data) { console.log(search_url);
+        success:function(data) {
             searchResults = data.results;
             $.each(searchResults, function(i, item) {
+
+               $('<div>').attr('id', 'd'+i).html('<p><a href="'+item.productUrl+'" target="new"><b>'+item.brandName+'</b><br/>'+item.productName+'</a></p>').appendTo('#results');
                $('<img/>').attr('src', item.thumbnailImageUrl).attr('id', item.styleId)
-                          .attr('href', item.productUrl).appendTo('#results').click(function() {
-                    var img_url = 'http://api.zappos.com/Image?styleId='+$(this).attr('id')+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
-                    console.log(img_url);
+                          .attr('href', item.productUrl).click(function() {
+                    var img_url = 'http://api.zappos.com/Image?styleId='+item.styleId+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
                     var styleId = item.styleId;
+                    curr_style_id = styleId;
                     get_images(styleId);
-               }); 
-            });            
-//            start_dancing(searchResults[0].styleId);
+               }).prependTo('#d'+i);
+               
+            });
         }
     });
-
-
-    /*$('img#dancer').hover(function() {
-        $(this).attr("src","http:\/\/www.zappos.com\/images\/z\/1\/5\/4\/1545843-2-MULTIVIEW.jpg");
-            }, function() {
-        $(this).attr("src","http:\/\/www.zappos.com\/images\/z\/1\/5\/4\/1545843-p-MULTIVIEW.jpg");
-    });*/
 
     var twist = ['TOP','LEFT'];
     var turn = ['PAIR','TOP','BOTTOM','LEFT'];
 
     $('div#twist-right').click(function() {
-//        $(this).replaceWith("TWIST-RIGHT");
         types = ['PAIR','RIGHT'];
         idx = 0;
     });
 
     $('div#twist-left').click(function() {
-//        $(this).replaceWith("TWIST-LEFT");
         types = ['PAIR','LEFT'];
         idx = 0;
     });
 
     $('div#turn').click(function() {
- //       $(this).replaceWith("TURN");
         types = turn;
         idx = 0;
         interval = 300;
@@ -85,6 +86,19 @@
             start_dancing();
         }
     });
+
+   $('div#rotate').click(function() {
+        rotating = !rotating;
+        if(rotating) {
+            ;// start rotating
+//           searchResults(curr_style_idx);
+console.log('start');
+        }
+        else {
+console.log('stop');
+            // stop rotating
+        }
+   }); 
   }
 
     function get_images(styleId) {
@@ -105,6 +119,9 @@
     }
 
     function start_dancing() {
+        console.log('i am dancin ');
+setTimeout('myFunx()', 5000);
+
         dancing = true;
         var mooove = setInterval( function() {
             
@@ -141,12 +158,22 @@
         <div id="turn">turn</div>
     </div>-->
     <div id="title">
-        SPIRIT HOODS. Watch them dance!
+        SPIRIT HOODS
+        <div id="description">Click on your favorite to make them dance!</div>
     </div>
-    <div id="results">
-    </div>
+    <div id="results"></div>
     <img id="dancer" src="http:\/\/www.zappos.com\/images\/z\/1\/5\/4\/1545843-p-MULTIVIEW.jpg">
-    <audio src="animal.mp3" autoplay loop controls>
+    <br><br>
+    <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
+    <p>Compatible with Google Chrome, and perhaps only Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
+    <br><br>
+<!--    <div id="controller">
+        <div id="twist-right">twist to the right</div>
+        <div id="turn">turn</div>
+        <div id="rotate">Everybody DANCE!</div>
+    </div>-->
+<!--    <audio src="animal.ogg" controls/> 
+    <div id="compatibility">Compatibile with Google Chrome.  I'm not gonna fix it if it's broken in another browser. kthxbai.</div> -->
 </body>
 </html>
 
