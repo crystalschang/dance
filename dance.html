@@ -3,8 +3,8 @@
 <head>
 <style type="text/css">
   html { height: 100%; background-color: grey; }
-  body { height: 100%; margin: 0 auto; padding: 0px; width: 1000px; text-align:center; background-color: white; box-shadow: 0 0 15px #000;}
-  div { font-family: Arial; font-size:14px; text-align:center;}
+  body { height: 780px; margin: 0 auto; padding: 0px; width: 1000px; text-align:center; background-color: white; box-shadow: 0 0 15px #000;}
+  div { font-family: Verdana; font-size:11px; text-align:center;}
   a { color: black; font-size: 11px; font-family: Verdana;}
   p { margin: 0px; font-family: Verdana; font-size: 11px; auto-margin: left; auto-margin: right;}
   #title { text-align:center;font-size:35px; width:100%;}
@@ -39,29 +39,7 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
     var zappos_url='http://api.zappos.com/Image?productId='+product_id+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
     var images = '';
 
-    $.ajax({
-        url:search_url,
-        dataType:'jsonp',
-        success:function(data) {
-            searchResults = data.results;
-            $.each(searchResults, function(i, item) {
-
-               $('<div>').attr('id', 'd'+i).attr('class', 'result').html('<p><a href="'+item.productUrl+'" target="new"><b>'+item.brandName+'</b><br/>'+item.productName+'</a></p>').appendTo('#results');
-               $('<img/>').attr('src', item.thumbnailImageUrl).attr('id', item.styleId)
-                          .attr('href', item.productUrl).click(function() {
-                    var img_url = 'http://api.zappos.com/Image?styleId='+item.styleId+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
-                    var styleId = item.styleId;
-                    curr_style_id = styleId;
-                    get_images(styleId);
-               }).prependTo('#d'+i);
-               
-            });
-            
-            get_images(searchResults[3].styleId);
-        }
-    });
-
-
+    get_search_results(search_url);
     
     var twist = ['TOP','LEFT'];
     var turn = ['PAIR','TOP','BOTTOM','LEFT'];
@@ -93,12 +71,47 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
         }
     });
 
-   $('div#girls').click(function() {
-        console.log('let\'s see some girls!');
-        var search_url='http://api.zappos.com/Search?filters={"zc1":["Clothing"],"zc2":["Swimwear"],"txAttrFacet_Gender":["Women"]}&limit=7&key='+API_KEY;;
-        initialize();
-   }); 
+
+   $('#submit-button').click(function() {
+        var input = $('#term').val();
+        console.log(input);
+        get_search_results('http://api.zappos.com/Search?term='+input+'&limit=7&key='+API_KEY);
+        return false;
+   });
+ 
   }
+
+    function get_search_results(url) {
+
+        // let's clear everything, in case we already loaded up...
+        $('#results').empty();
+
+      $.ajax({
+        url:url,
+        dataType:'jsonp',
+        success:function(data) {
+            searchResults = data.results;
+            $.each(searchResults, function(i, item) {
+               var productName = item.productName;
+                var maxLength = 17;
+                if(productName.length > maxLength) {
+                    productName = productName.substring(0, maxLength)+'...';
+                } 
+               $('<div>').attr('id', 'd'+i).attr('class', 'result').html('<p><a href="'+item.productUrl+'" target="new"><b>'+item.brandName+'</b><br/>'+productName+'</a></p>').appendTo('#results');
+               $('<img/>').attr('src', item.thumbnailImageUrl).attr('id', item.styleId)
+                          .attr('href', item.productUrl).click(function() {
+                    var img_url = 'http://api.zappos.com/Image?styleId='+item.styleId+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
+                    var styleId = item.styleId;
+                    curr_style_id = styleId;
+                    get_images(styleId);
+               }).prependTo('#d'+i);
+               
+            });
+            
+            get_images(searchResults[3].styleId);
+        }
+     });
+    }
 
     function get_images(styleId) {
         var img_url = 'http://api.zappos.com/Image?styleId='+styleId+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
@@ -151,6 +164,12 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
         SPIRIT HOOD DANCERZ
         <div id="description">Click on your favorite animal to make them dance!</div>
     </div>
+    <div id="search-container">
+        <form id="search">
+            <font color="grey">...or search for your favorite Zappos products: <input type="text" name="term" id="term"/></font>
+            <input type="submit" id="submit-button" value="GO"/>
+        </form>
+    </div>
     <div id="results"></div>
     <img id="dancer"><!-- src="http://www.zappos.com/images/z/1/5/4/1545838-1-MULTIVIEW.jpg"-->
     <br><br>
@@ -161,8 +180,8 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
         <div id="twist-right">twist to the right</div>
         <div id="turn">turn</div>
         <div id="girls">Everybody DANCE!</div>
-    </div>-->
-    <audio src="animal.ogg" autoplay loop controls>
+    </div>
+    <audio src="animal.ogg" autoplay loop controls> -->
 </body>
 </html>
 
