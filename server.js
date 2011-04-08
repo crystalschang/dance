@@ -5,10 +5,10 @@ var sys = require("sys");
     fs = require('fs');
     events = require('events');
 var API_KEY = '4522743d51eb337111172b55c2f92434';
-var ip = "127.0.0.1";
-//var ip = "64.30.136.162";
-var port = "8124";
-//var port = "80";
+//var ip = "127.0.0.1";
+var ip = "64.30.136.162";
+//var port = "8124";
+var port = "80";
 var api_emitter = new events.EventEmitter();
 
 http.createServer(function (request, response) {
@@ -39,6 +39,6 @@ http.createServer(function (request, response) {
     	    });
         }
     });
-}).listen(port, ip);
+}).listen(80, "64.30.136.162");
 console.log('Server running at http://127.0.0.1:8124/');
 
