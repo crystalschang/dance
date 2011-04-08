@@ -16,9 +16,13 @@ http.createServer(function (request, response) {
     var params = url.parse(request.url,true).query;
     var filename = path.join(process.cwd(), uri);
 
-    if(uri == '/dance') {
+    if(uri == '/') {
+        filename = 'index.html';
+    }
+    else if(uri == '/dance') {
         filename = 'dance.html';
     }
+    
 
     path.exists(filename, function(exists) {
 	    if(!exists) {
