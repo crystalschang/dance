@@ -56,9 +56,13 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
                }).prependTo('#d'+i);
                
             });
+            
+            get_images(searchResults[3].styleId);
         }
     });
 
+
+    
     var twist = ['TOP','LEFT'];
     var turn = ['PAIR','TOP','BOTTOM','LEFT'];
 
@@ -144,11 +148,11 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
 </head>
 <body onload="initialize()">
     <div id="title">
-        SPIRIT HOODS
-        <div id="description">Click on your favorite to make them dance!</div>
+        SPIRIT HOOD DANCERZ
+        <div id="description">Click on your favorite animal to make them dance!</div>
     </div>
     <div id="results"></div>
-    <img id="dancer" src="http:\/\/www.zappos.com\/images\/z\/1\/5\/4\/1545843-p-MULTIVIEW.jpg">
+    <img id="dancer" src="http://www.zappos.com/images/z/1/5/4/1545838-1-MULTIVIEW.jpg">
     <br><br>
     <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
     <p>Compatible with Google Chrome, and perhaps ONLY Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
@@ -158,7 +162,7 @@ var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%
         <div id="turn">turn</div>
         <div id="girls">Everybody DANCE!</div>
     </div>-->
-    <audio src="animal.ogg" autoplay loop controls>
+    <audio src="animal.mp3" autoplay loop controls>
 </body>
 </html>
 
