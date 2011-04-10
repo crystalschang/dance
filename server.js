@@ -26,7 +26,7 @@ http.createServer(function (request, response) {
     
     var period = uri.substring(uri.length-4,uri.length-3);
     var period_2 =  uri.substring(uri.length-3,uri.length-2);
-
+    ctx = {};
     var dance_path = false;
     if(uri == '/') {
         filename = 'index.html';
@@ -60,6 +60,7 @@ http.createServer(function (request, response) {
     else {
 
     path.exists(filename, function(exists) {
+console.log('loading'+filename);
 	    if(!exists) {
 	        response.statusCode = 404;
 	        response.end('404 Not Found\n');
@@ -78,7 +79,7 @@ http.createServer(function (request, response) {
         }
     });
     }
-}).listen(80, "64.30.136.162");
-//}).listen(8124, "127.0.0.1");
+//}).listen(80, "64.30.136.162");
+}).listen(8124, "127.0.0.1");
 console.log('Server running at http://127.0.0.1:8124/');
 
