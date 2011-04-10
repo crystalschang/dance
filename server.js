@@ -79,7 +79,7 @@ console.log('loading'+filename);
         }
     });
     }
-//}).listen(80, "64.30.136.162");
-}).listen(8124, "127.0.0.1");
+}).listen(80, "64.30.136.162");
+//}).listen(8124, "127.0.0.1");
 console.log('Server running at http://127.0.0.1:8124/');
 
