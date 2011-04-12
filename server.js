@@ -31,6 +31,7 @@ http.createServer(function (request, response) {
 /*    if(uri == '/') {
         filename = 'index.html';
     }*/
+console.log('uri'+uri);
     if(uri == '/' || uri == '/dance') {
         filename = 'dance.html';
         dance_path = true;
