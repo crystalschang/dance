@@ -28,10 +28,10 @@ http.createServer(function (request, response) {
     var period_2 =  uri.substring(uri.length-3,uri.length-2);
     ctx = {};
     var dance_path = false;
-    if(uri == '/') {
+/*    if(uri == '/') {
         filename = 'index.html';
-    }
-    else if(uri == '/dance') {
+    }*/
+    if(uri == '/' || uri == '/dance') {
         filename = 'dance.html';
         dance_path = true;
     }
@@ -85,7 +85,7 @@ http.createServer(function (request, response) {
         }
     });
     }
-}).listen(80, "64.30.136.162");
-//}).listen(8124, "127.0.0.1");
+//}).listen(80, "64.30.136.162");
+}).listen(8124, "127.0.0.1");
 console.log('Server running at http://127.0.0.1:8124/');
 
