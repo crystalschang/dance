@@ -35,12 +35,19 @@ http.createServer(function (request, response) {
         filename = 'dance.html';
         dance_path = true;
     }
-    else if(uri_start == '/dance/' && !('.' == period || '.' == period_2)) {
-        search_path = uri.substring(7,uri.length);
-        ctx['input_term'] = search_path;
-        filename = 'dance.html';
-        dance_path = true;
+    else if(uri_start == '/dance/') {
+        if('.' == period || '.' == period_2) {
+            uri = uri.substring(6, uri.length);
+            filename = path.join(process.cwd(), uri);
+        }
+        else {
+            search_path = uri.substring(7,uri.length);
+            ctx['input_term'] = search_path;
+            filename = 'dance.html';
+            dance_path = true;
+        }
     }
+
 
     if(dance_path) {
         var finalProd = '';
@@ -60,7 +67,6 @@ http.createServer(function (request, response) {
     else {
 
     path.exists(filename, function(exists) {
-console.log('loading'+filename);
 	    if(!exists) {
 	        response.statusCode = 404;
 	        response.end('404 Not Found\n');
