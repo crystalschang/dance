@@ -3,24 +3,30 @@
 <head>
 <style type="text/css">
   html { height: 100%; background-color: grey; }
-  body { height: 780px; margin: 0 auto; padding: 0px; width: 1000px; text-align:center; background-color: white; box-shadow: 0 0 15px #000;}
+  body { height: 780px; margin: 0 auto; padding: 0px; width: 1005px; text-align:center; background-color: white; box-shadow: 0 0 15px #000;}
   div { font-family: Verdana; font-size:11px; text-align:center;}
   a { color: black; font-size: 11px; font-family: Verdana;}
   p { margin: 0px; font-family: Verdana; font-size: 11px; auto-margin: left; auto-margin: right;}
   #title { text-align:center;font-size:35px; width:100%;}
   #description {text-align: center; width: 100%;}
-  #dancer { }
-  #results{ width: 1000px;}
+  #share {}
+  #dancer { height: 560px;}
+  #results{ width: 1000px; }
   #results-container { font-family: Arial; font-size:14px; text-align:center; width: 100%; overflow: hidden; margin-left: 0px; padding-top: 10px; height: 130px;}
-  #results .result{ float:left; }
+  #results .result{ float:left; width:136;}
   #results-left { float:left; font-size: 20px; vertical-align: middle; font-color: '#D3D3D3';}
-  #results-right { float:right; font-size: 20px; vertical-align: middle; font-color: '#D3D3D3';}}
-  #controller {  margin-left:850px; background-color: black; padding: 5px; opacity: .80; top: 200px; position: absolute; }
-  #controller div { padding: 5px; margin: 5px; background-color: #66FF55; width: 200px;}
-  #notice { margin-left: 830px; top: 600px; position: absolute;};
+  #results-right { float:right; font-size: 20px; vertical-align: middle; font-color: '#D3D3D3';}
+  #controller { margin-left: 420px; top: 730px; width: 350px;  position: absolute; }
+  #controller .direction { float:left; padding: 5px; margin: 3px;  background-color: #66FF55; width: 40px; font-color: white; font-size: 26px; opacity: .5; border-width: 1px; }
   #control {}
 </style>
 <script src="./lib/jquery.js"></script>
+<script src="./lib/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $( "#slider" ).slider();
+    });
+    </script>
 <script type="text/javascript">
 
   var API_KEY='734a9120e423cbafbfb5044c6d196c42';
@@ -48,7 +54,6 @@
     var images = '';
 
     var path_input = '{{input_term}}';
-console.log('path input'+path_input);
     if(path_input != null && path_input != '') {
        search_url = 'http://api.zappos.com/Search?term='+path_input+'&limit=7&key='+API_KEY;
     }
@@ -66,7 +71,9 @@ console.log('path input'+path_input);
         if(imageMap['RIGHT']==null) {
             types = ['PAIR', 'TOP']
         }
-
+        $('div#twist-right').attr('style','opacity:1;');
+        $('div#twist-left').attr('style','opacity:.5;');
+        $('div#turn').attr('style','opacity:.5;');
 //        $('div#twist-left').unwrap('<b/>');
 //        $('div#turn').unwrap('<b/>');
 //        $(this).wrap('<b/>');
@@ -78,9 +85,9 @@ console.log('path input'+path_input);
          if(imageMap['LEFT']==null) {
              $('#notice').replaceWith('<div id="notice">Oh no, I am a Zoolander... <br>I cannot turn left!</div>');
         }
-//        $(this).wrap('<b/>');
-//        $('div#twist-right').unwrap('<b/>');    
-//        $('div#turn').unwrap('<b/>');
+        $('div#twist-left').attr('style', 'opacity:1;');    
+        $('div#turn').attr('style','opacity:.5;');
+        $('div#twist-right').attr('style','opacity:.5;');
     });
 
     $('div#turn').click(function() {
@@ -90,7 +97,11 @@ console.log('path input'+path_input);
 //        $('div#twist-right').unwrap('<b/>');
 //        $('div#twist-left').unwrap('<b/>');
 //        $('div#turn').wrap('<b/>');
+        $('div#turn').attr('style','opacity:1;');
+        $('div#twist-left').attr('style','opacity:.5;');
+        $('div#twist-right').attr('style','opacity:.5;');
     });
+
 
     $('div#toggle').click(function() {
         if(dancing) {
@@ -106,7 +117,6 @@ console.log('path input'+path_input);
 
    $('#submit-button').click(function() {
         var input = $('#term').val();
-        console.log(input);
         search_url = 'http://api.zappos.com/Search?term='+input+'&limit=7&key='+API_KEY;
         page_id = 1;
         get_search_results();
@@ -126,11 +136,23 @@ console.log('path input'+path_input);
             get_search_results();
         }
     });
- 
+
+
+    $('#slider').slider();
+
+        $('#share').toggle(function() {
+            var share_url = 'http://crystal.no.de/dance';
+            if(input != null && input !='' ) { 
+                share_url += '/'+input; 
+            }
+            $('#link').replaceWith('<div id="link">'+share_url+'</div>');
+        }, 
+        function() {
+            $('#link').replaceWith('<div id="link"></div>');
+        }); 
   }
 
     function get_search_results() {
-        console.log('searchurl'+search_url);
         var curr_search_url = search_url+'&page='+page_id;
         // let's clear everything, in case we already loaded up...
         $('#results').empty();
@@ -158,7 +180,7 @@ console.log('path input'+path_input);
             });
             
             TOTAL_RESULT_COUNT = data.totalResultCount;
-            get_images(searchResults[3].styleId);
+            get_images(searchResults[0].styleId);
             change_arrows();
         }
      });
@@ -240,7 +262,13 @@ console.log('path input'+path_input);
 
         $('#results-left').attr('style', 'color:'+color_left);
         $('#results-right').attr('style', 'color:'+color_right);
+
     }
+
+    $(document).ready(function() {
+//        var slider = $('div#slider').slider();
+  //      $('div#slider').slider({max: 7, min: 0});
+    });
 </script>
 <script type="text/javascript">
 
@@ -273,14 +301,14 @@ console.log('path input'+path_input);
         <div id="results-right">&#8594;</div>
     </div>
     <img id="dancer"><!-- src="http://www.zappos.com/images/z/1/5/4/1545838-1-MULTIVIEW.jpg"-->
-    <br>
-    <div id="notice"></div>
+   <!--div id="notice"></div-->
     <div id="controller">
         <!--div id="toggle">No more dancing!</div-->
-        <div id="twist-right" class='direction'>twist to the right</div>
-        <div id="twist-left" class='direction'>twist to the left</div>
-        <div id="turn">spinny-spin!</div>
+        <div id="twist-right" class='direction'><font face="webdings">&#51;</font></div>
+        <div id="turn" class='direction'><font face="webdings">&#113;</font></div>
+        <div id="twist-left" class='direction'><font face="webdings">&#52;</font></div>
     </div>
+    <div id="slider"></div>
     <br><br>
     <a href="http://twitter.com/share" class="twitter-share-button" data-text="Can't. Stop. Dancing! http://crystal.no.de/dance" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
