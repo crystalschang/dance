@@ -310,10 +310,10 @@
     </div>
     <div id="slider"></div>
     <br><br>
-    <a href="http://twitter.com/share" class="twitter-share-button" data-text="Can't. Stop. Dancing! http://crystal.no.de/dance" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <a href="http://twitter.com/share" class="twitter-share-button" data-text="Can't. Stop. Dancing! http://www.spiritdancerz.com" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <p>Powered by the <a href="http://developers.zappos.com" target="new">Zappos API</a>.</p>
     <p>Compatible with Google Chrome, and perhaps ONLY Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
-    
+    <p>twitter: <a href="http://www.twitter.com/crystalschang">@crystalschang</a>    
     <br><br>
     <!--<audio src="animal.ogg" loop controls> -->
 </body>
