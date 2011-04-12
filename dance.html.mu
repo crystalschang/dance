@@ -35,7 +35,8 @@
   var idx = 0;
   var interval = 350;
   var LIMIT = 7;
-  var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%20Hoods"]}&key='+API_KEY;
+  var search_url;
+  var spirit_url = 'http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%20Hoods"]}&key='+API_KEY;
   var TOTAL_RESULT_COUNT = 0;
 
   function initialize() {
@@ -50,6 +51,9 @@
 console.log('path input'+path_input);
     if(path_input != null && path_input != '') {
        search_url = 'http://api.zappos.com/Search?term='+path_input+'&limit=7&key='+API_KEY;
+    }
+    else {
+        search_url = spirit_url;
     }
     get_search_results();
     
