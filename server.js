@@ -48,7 +48,12 @@ console.log('uri'+uri);
             dance_path = true;
         }
     }
-
+    else if(!(('.' == period || '.' == period_2))) {
+        search_path = uri;
+        ctx['input_term'] = search_path;
+        filename = 'dance.html';
+        dance_path = true;
+    }
 
     if(dance_path) {
         var finalProd = '';
