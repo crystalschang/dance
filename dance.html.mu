@@ -317,7 +317,7 @@
     <p>Compatible with Google Chrome, and perhaps ONLY Google Chrome. Sowwie, I'm not a hipster front-end developer.</p>
     <p>twitter: <a href="http://www.twitter.com/crystalschang">@crystalschang</a>    
     <br><br>
-    <!--<audio src="animal.ogg" loop controls> -->
+    <audio src="animal.ogg" loop controls>
 </body>
 </html>
 
