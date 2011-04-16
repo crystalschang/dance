@@ -308,7 +308,7 @@
   //      $('div#slider').slider({max: 7, min: 0});
     });
 </script>
-<!--script type="text/javascript">
+<script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-22614011-1']);
@@ -322,7 +322,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script-->
+</script>
 </head>
 <body onload="initialize()">
     <div id="title">
