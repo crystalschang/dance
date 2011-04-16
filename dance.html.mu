@@ -53,7 +53,17 @@
     var zappos_url='http://api.zappos.com/Image?productId='+product_id+'&recipe=MULTIVIEW&callback=?&key='+API_KEY;
     var images = '';
 
-    var path_input = '{{input_term}}';
+    var url_path = window.location.href;
+    var faux = url_path.indexOf('#!');
+
+    var path_input = null;
+    if(faux != -1) {
+        path_input = url_path.substring(faux+1, url_path.length);    
+    }
+    else {
+        path_input = '{{input_term}}';
+    }
+
     if(path_input != null && path_input != '') {
        search_url = 'http://api.zappos.com/Search?term='+path_input+'&limit=7&key='+API_KEY;
     }
@@ -115,13 +125,40 @@
     });
 
 
-   $('#submit-button').click(function() {
+   $('#submit-button').click(function(e) {
+        console.log('click trigger');
         var input = $('#term').val();
         search_url = 'http://api.zappos.com/Search?term='+input+'&limit=7&key='+API_KEY;
         page_id = 1;
         get_search_results();
-        return false;
+  
+        $(this).attr('href', '/#!/'+input); 
    });
+
+    $('#search').submit(function(e) {
+        var q = $('#term').val();
+        console.log('q'+q);
+        if(q != null && q != '') {
+             search_url = 'http://api.zappos.com/Search?term='+q+'&limit=7&key='+API_KEY;
+             page_id = 1;
+            get_search_results();
+        }
+        e.preventDefault();
+    });
+
+    $('#term').keypress(function(e) {
+        if(e.which == '13') {
+            console.log('#entered..');
+            var input = $('#term').val();
+            search_url = 'http://api.zappos.com/Search?term='+input+'&limit=7&key='+API_KEY;
+            page_id = 1;
+            get_search_results();
+
+            window.location = '/#!/'+input;
+            e.preventDefault();
+        }
+    });
+    
 
     $('#results-left').click(function() {
         if(show_left_arrow()) {
@@ -154,6 +191,7 @@
 
     function get_search_results() {
         var curr_search_url = search_url+'&page='+page_id;
+        console.log(curr_search_url);
         // let's clear everything, in case we already loaded up...
         $('#results').empty();
         
@@ -270,7 +308,7 @@
   //      $('div#slider').slider({max: 7, min: 0});
     });
 </script>
-<script type="text/javascript">
+<!--script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-22614011-1']);
@@ -284,7 +322,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script>
+</script-->
 </head>
 <body onload="initialize()">
     <div id="title">
@@ -292,9 +330,9 @@
         <div id="description">Click on your favorite item to give it some spirit!</div>
     </div>
     <div id="search-container">
-        <form id="search">
+        <form id="search" method="GET">
             <font color="grey">...or search for your favorite Zappos products: <input type="text" name="term" id="term"/></font>
-            <input type="submit" id="submit-button" value="GO"/>
+            <a href="" id="submit-button">GO</a>
         </form>
     </div>
     <div id="results-container">
