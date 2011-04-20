@@ -335,6 +335,7 @@
             <a href="" id="submit-button">GO</a>
         </form>
     </div>
+    <div><b>SOLO MODE</b><br><a href="/partytime">(switch to EVERYBODY DANCE! mode)</a></div>
     <div id="results-container">
         <div id="results-left">&#8592;</div>
         <div id="results"></div>

@@ -22,6 +22,7 @@ http.createServer(function (request, response) {
     var params = url.parse(request.url,true).query;
     var filename = path.join(process.cwd(), uri);
     var uri_start = uri.substring(0,7);
+    var uri_party_start = uri.substring(0,11);
     var search_path;
     
     var period = uri.substring(uri.length-4,uri.length-3);
@@ -31,7 +32,7 @@ http.createServer(function (request, response) {
 /*    if(uri == '/') {
         filename = 'index.html';
     }*/
-console.log('uri'+uri);
+    console.log('uri'+uri);
     if(uri == '/' || uri == '/dance') {
         filename = 'dance.html';
         dance_path = true;
@@ -48,6 +49,24 @@ console.log('uri'+uri);
             dance_path = true;
         }
     }
+    else if(uri == '/partytime' || uri_party_start == '/partytime/') {
+          if('.' == period || '.' == period_2) {
+             uri = uri.substring(10, uri.length); 
+             filename = path.join(process.cwd(), uri);
+          }
+         else{
+            if(uri_party_start == '/partytime/') {
+                search_path = uri.substring(11, uri.length);
+                ctx['input_term'] = search_path;
+            }
+            filename = 'party.html';
+            dance_path = true;
+        }
+
+        console.log('uri new:'+uri);
+        console.log('filename'+filename);
+        console.log('search path'+search_path);
+    }
     else if(!(('.' == period || '.' == period_2))) {
         search_path = uri;
         ctx['input_term'] = search_path;
@@ -57,7 +76,7 @@ console.log('uri'+uri);
 
     if(dance_path) {
         var finalProd = '';
-            Mu.render('dance.html', ctx, {}, function(err, output) {
+            Mu.render(filename, ctx, {}, function(err, output) {
                 if(err) throw err;
             
                 output
