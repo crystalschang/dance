@@ -3,7 +3,7 @@
 <head>
 <style type="text/css">
   html { height: 100%; background-color: grey; }
-  body { height: 780px; margin: 0 auto; padding: 0px; width: 1005px; text-align:center; background-color: white; box-shadow: 0 0 15px #000;}
+  body { height: 810px; margin: 0 auto; padding: 0px; width: 1005px; text-align:center; background-color: white; box-shadow: 0 0 15px #000;}
   div { font-family: Verdana; font-size:11px; text-align:center;}
   a { color: black; font-size: 11px; font-family: Verdana;}
   p { margin: 0px; font-family: Verdana; font-size: 11px; auto-margin: left; auto-margin: right;}
