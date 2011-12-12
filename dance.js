@@ -11,7 +11,7 @@
   var idx = 0;
   var interval = 350;
   var LIMIT = 7;
-  var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["Spirit%20Hoods"]}&key='+API_KEY;
+  var search_url='http://api.zappos.com/Search?filters={"brandNameFacet":["SpiritHoods"]}&key='+API_KEY;
   var TOTAL_RESULT_COUNT = 0;
 
   function initialize() {
